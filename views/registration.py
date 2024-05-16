@@ -12,7 +12,7 @@ def registration(client: MySQLClient):
         email = st.text_input('Correo Electronico')
         password = st.text_input('Contraseña', type='password')
         rpt_password = st.text_input('Repetir Contraseña', type='password')
-        register = st.button('Register')
+        register = st.button('Registrar',use_container_width=True)
         
         if register:
             if password == rpt_password:
@@ -27,5 +27,5 @@ def registration(client: MySQLClient):
                 else:
                     st.toast('Error al registrar usuario', icon=':material/thumb_down:')
             else:
-                st.write('Passwords do not match')
+                st.error('Las contraseñas no coinciden',icon=':material/error:')
         

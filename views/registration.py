@@ -6,7 +6,7 @@ from components import MySQLClient
 
 def registration(client: MySQLClient):
     with st.container(border=True):
-        st.title('Registration')
+        st.title('Registro de Usuario')
         name = st.text_input('Nombre')
         last_name = st.text_input('Apellido')
         email = st.text_input('Correo Electronico')

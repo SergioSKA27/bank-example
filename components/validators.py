@@ -7,6 +7,6 @@ class Validator:
         self.db_client = db_client
 
     def validate_user(self, mail: str, password: str) -> bool:
-        encrypted_password = self.db_client.get_user_password(mail)
+        encrypted_password = self.db_client.get_user(mail)[0][4]
         
         return bcrypt.checkpw(password.encode('utf-8'), encrypted_password.encode('utf-8'))

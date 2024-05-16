@@ -51,3 +51,7 @@ class MySQLClient:
     def list_tables(self):
         query = "SHOW TABLES"
         return self.execute(query)
+    
+    def list_users(self):
+        query = "SELECT * FROM Usuarios"
+        return self.execute(query)

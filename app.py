@@ -1,5 +1,5 @@
 import streamlit as st
-from components import MySQLClient
+from components import MySQLClient,SessionHandler
 
 
 st.set_page_config(page_title="UniBank", page_icon=":bank:", layout="wide")
@@ -11,7 +11,12 @@ client = MySQLClient(host="localhost",
 
 client.connect()
 
-st.write(client.list_tables())
+
+if 'session' not in st.session_state:
+    st.session_state.session = SessionHandler(client)
+
+if st.session_state.session.is_active():
+    st.write(st.session_state.session.get_session_owner())
 
 def heromain():
     cols = st.columns([.6,.4])

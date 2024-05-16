@@ -13,6 +13,7 @@ client.connect()
 
 
 if 'session' not in st.session_state:
+    # Create a new session handler
     st.session_state.session = SessionHandler(client)
 
 if st.session_state.session.is_active():

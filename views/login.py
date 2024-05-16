@@ -9,6 +9,11 @@ from components.session_handler import SessionHandler
 def login(client: MySQLClient):
     if 'session' not in st.session_state:
         st.session_state.session = SessionHandler(client)
+    else:
+        # Si la sesion ya esta activa, redirigir a la pagina principal
+        if st.session_state.session.is_active():
+            st.switch_page('app.py')
+
     with st.container(border=True):
         st.title('Login')
         email = st.text_input('Email')

@@ -23,7 +23,9 @@ def heromain():
         with b1:
             st.button("Iniciar sesión")
         with b2:
-            st.button("Registrarse")
+            reg = st.button("Registrarse")
+            if reg:
+                st.switch_page("pages/register.py")
             
     with cols[1]:
         st.image("https://img.freepik.com/free-vector/linear-flat-internet-banking-infographics-template-icons-website-hero-image-vector-illustration_126523-2982.jpg",

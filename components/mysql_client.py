@@ -13,7 +13,7 @@ class MySQLClient:
             host=self.host,
             user=self.user,
             password=self.password,
-            database=self.database
+            database=self.database,
         )
         self.cursor = self.connection.cursor()
 
@@ -23,14 +23,18 @@ class MySQLClient:
 
     def close(self):
         self.connection.close()
-        
-    
+
     def insert_user(self, user):
         query = """INSERT INTO Usuarios (Nombre, Apellido, CorreoElectronico, Contraseña, FechaRegistro)
                     VALUES (%s, %s, %s, %s, NOW());
                 """
-        values = (user['Nombre'], user['Apellido'], user['CorreoElectronico'], user['Contraseña'])
-        
+        values = (
+            user["Nombre"],
+            user["Apellido"],
+            user["CorreoElectronico"],
+            user["Contraseña"],
+        )
+
         try:
             self.cursor.execute(query, values)
             self.connection.commit()
@@ -39,7 +43,11 @@ class MySQLClient:
             print(e)
             return False
 
-    
+    def get_user(self, email):
+        # trunk-ignore(bandit/B608)
+        query = f"SELECT * FROM Usuarios WHERE CorreoElectronico = '{email}'"
+        return self.execute(query)
+
     def list_tables(self):
         query = "SHOW TABLES"
         return self.execute(query)

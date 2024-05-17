@@ -1,3 +1,5 @@
+import time
+
 import streamlit as st 
 from components.validators import Validator
 from components.mysql_client import MySQLClient
@@ -24,6 +26,9 @@ def login(client: MySQLClient):
             if validate.validate_user(email, password):
                 st.toast('Sesion iniciada correctamente', icon=':material/sentiment_satisfied:')
                 st.session_state.session.start_session(email)
+                time.sleep(1)
+                st.switch_page('app.py')
+
             else:
                 st.error('Fallo al iniciar Sesion',icon=":material/sentiment-dissatisfied:")
 

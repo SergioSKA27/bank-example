@@ -3,7 +3,7 @@ from components import SessionHandler
 
 def navbar(session: SessionHandler):
     
-    container = st.container(border=True)
+    container = st.container(border=False)
     cols = container.columns([2,1,1,1,1,1,1])
     
     
@@ -41,7 +41,7 @@ def navbar(session: SessionHandler):
                 st.page_link("pages/register.py",label="Ver Perfil",icon="👤")
             
             with cols[-1]:
-                st.button("Salir🚪",use_container_width=True)
+                st.button("Salir🚪",use_container_width=True,type='primary')
         else:
 
             with cols[-1]:

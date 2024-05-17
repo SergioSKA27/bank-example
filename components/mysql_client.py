@@ -48,10 +48,32 @@ class MySQLClient:
         query = f"SELECT * FROM Usuarios WHERE CorreoElectronico = '{email}'"
         return self.execute(query)
 
+    def insert_account(self, account):
+        sql = """INSERT INTO Cuentas (ID_Usuario, TipoCuenta, SaldoActual, FechaCreacion)
+                    VALUES (%s, %s, %s, NOW());"""
+        values = (
+            account["ID_Usuario"],
+            account["TipoCuenta"],
+            account["SaldoActual"],
+        )
+
+        try:
+            self.cursor.execute(sql, values)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
+    def get_accounts(self, user_id):
+        # trunk-ignore(bandit/B608)
+        query = f"SELECT * FROM Cuentas WHERE ID_Usuario = {user_id}"
+        return self.execute(query)
+
     def list_tables(self):
         query = "SHOW TABLES"
         return self.execute(query)
-    
+
     def list_users(self):
         query = "SELECT * FROM Usuarios"
         return self.execute(query)

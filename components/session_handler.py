@@ -16,5 +16,11 @@ class SessionHandler:
     def get_session_owner(self):
         return self.session[0][1]
     
+    def get_accounts(self):
+        return self.client.get_accounts(self.session[0][0])
+
     def is_active(self):
         return self.active
+
+    def user_info(self):
+        return self.session

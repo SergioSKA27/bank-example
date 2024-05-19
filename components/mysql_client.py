@@ -161,6 +161,52 @@ END IF;
             print(e)
             return False
 
+    def make_transfer(self, origen, destino, monto):
+        # trunk-ignore(bandit/B608)
+        query = f"SELECT * FROM Cuentas WHERE ID_Cuenta = {origen}"
+
+        saldo_origen = self.execute(query)[0][3]
+
+        if saldo_origen < monto:
+            return False
+        else:
+            nsaldo_origen = float(saldo_origen) - monto
+            # trunk-ignore(bandit/B608)
+            update_origen = f"UPDATE Cuentas SET SaldoActual = {nsaldo_origen} WHERE ID_Cuenta = {origen}"
+            try:
+                self.cursor.execute(update_origen)
+                self.connection.commit()
+            except Exception as e:
+                self.connection.rollback()
+                print(e)
+                return False
+
+            # trunk-ignore(bandit/B608)
+            query = f"SELECT * FROM Cuentas WHERE ID_Cuenta = {destino}"
+            saldo_destino = self.execute(query)[0][3]
+            nsaldo_destino = float(saldo_destino) + monto
+            # trunk-ignore(bandit/B608)
+            update_destino = f"UPDATE Cuentas SET SaldoActual = {nsaldo_destino} WHERE ID_Cuenta = {destino}"
+            try:
+                self.cursor.execute(update_destino)
+                self.connection.commit()
+            except Exception as e:
+                self.connection.rollback()
+                print(e)
+                return False
+
+            transaction = {
+                "ID_Cuenta_origen": origen,
+                "ID_Cuenta_destino": destino,
+                "TipoTransaccion": "transferencia",
+                "Monto": monto,
+            }
+            restrans = self.insert_transaction(transaction)
+            if restrans:
+                return True
+            else:
+                return False
+
     def insert_transaction(self, transaction):
 
         # trunk-ignore(bandit/B608)
@@ -182,4 +228,9 @@ END IF;
                     WHERE ID_Cuenta_origen IN (SELECT ID_Cuenta FROM Cuentas WHERE ID_Usuario = {user_id})
                     OR ID_Cuenta_destino IN (SELECT ID_Cuenta FROM Cuentas WHERE ID_Usuario = {user_id})
                     """
+        return self.execute(query)
+
+
+    def get_all_accounts(self):
+        query = "SELECT * FROM Cuentas"
         return self.execute(query)

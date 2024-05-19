@@ -4,12 +4,14 @@ import streamlit as st
 from views.accont_creator import create_account
 from views.deposit_maker import deposit_maker
 
+from .transfer_maker import transfer_maker
+
 
 def transaction_card(transactions):
     st.divider()
     st.subheader("Transacciones")
 
-    _,cl,_ = st.columns([1,4,1])
+    _, cl, _ = st.columns([1, 4, 1])
     colums = [
         "ID Transaccion",
         "ID Cuenta Origen",
@@ -50,6 +52,10 @@ def home():
             if deposit:
                 deposit_maker(st.session_state.session.client)
 
+            transf = st.button("Transferir", use_container_width=True)
+            if transf:
+                transfer_maker(st.session_state.session.client)
+
     with c2:
         if len(accounts) < 1:
             st.warning("No tienes cuentas registradas")
@@ -64,4 +70,3 @@ def home():
     transactions = st.session_state.session.get_user_transactions()
     if len(transactions) > 0:
         transaction_card(transactions)
-

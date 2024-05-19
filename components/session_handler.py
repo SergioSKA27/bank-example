@@ -25,3 +25,6 @@ class SessionHandler:
 
     def user_info(self):
         return self.session
+
+    def get_all_accounts(self):
+        return self.client.get_all_accounts()

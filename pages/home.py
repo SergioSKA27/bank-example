@@ -29,6 +29,10 @@ st.markdown(
 
 
 def transaction_card(transactions):
+    st.divider()
+    st.subheader("Transacciones")
+
+    _,cl,_ = st.columns([1,4,1])
     colums = [
         "ID Transaccion",
         "ID Cuenta Origen",
@@ -38,7 +42,7 @@ def transaction_card(transactions):
         "Fecha de Transaccion",
     ]
     df = pd.DataFrame(transactions, columns=colums)
-    st.write(df)
+    cl.write(df)
 
 
 def user_card(user):

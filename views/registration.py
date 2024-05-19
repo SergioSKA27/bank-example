@@ -25,7 +25,7 @@ def registration(client: MySQLClient):
                 if client.insert_user(user):
                     st.toast('Usuario registrado exitosamente', icon=':material/thumb_up:' )
                 else:
-                    st.toast('Error al registrar usuario', icon=':material/thumb_down:')
+                    st.toast('Error al registrar usuario', icon='❗')
             else:
                 st.error('Las contraseñas no coinciden',icon=':material/error:')
         

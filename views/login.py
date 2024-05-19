@@ -21,7 +21,7 @@ def login(client: MySQLClient):
         email = st.text_input('Email')
         password = st.text_input('Password', type='password')
         validate = Validator(client)
-        login = st.button('Login')
+        login = st.button('Login',use_container_width=True)
         if login:
             if validate.validate_user(email, password):
                 st.toast('Sesion iniciada correctamente', icon=':material/sentiment_satisfied:')
@@ -30,7 +30,7 @@ def login(client: MySQLClient):
                 st.switch_page('pages/home.py')
 
             else:
-                st.error('Fallo al iniciar Sesion',icon=":material/sentiment-dissatisfied:")
+                st.error('Fallo al iniciar Sesion',icon="❗")
 
 
 

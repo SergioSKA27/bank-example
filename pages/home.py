@@ -1,3 +1,4 @@
+import pandas as pd
 import streamlit as st
 
 from views.accont_creator import create_account
@@ -25,6 +26,19 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
+
+
+def transaction_card(transactions):
+    colums = [
+        "ID Transaccion",
+        "ID Cuenta Origen",
+        "ID Cuenta Destino",
+        "Tipo de Transaccion",
+        "Monto",
+        "Fecha de Transaccion",
+    ]
+    df = pd.DataFrame(transactions, columns=colums)
+    st.write(df)
 
 
 def user_card(user):
@@ -65,6 +79,10 @@ def home():
         addacc = st.button("Agregar Cuenta", use_container_width=True)
         if addacc:
             create_account(st.session_state.session.client)
+
+    transactions = st.session_state.session.get_user_transactions()
+    if len(transactions) > 0:
+        transaction_card(transactions)
 
 
 if __name__ == "__main__":

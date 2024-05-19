@@ -145,8 +145,41 @@ END IF;
         try:
             self.cursor.execute(update)
             self.connection.commit()
+            transaction = {
+                "ID_Cuenta_origen": cuenta,
+                "ID_Cuenta_destino": cuenta,
+                "TipoTransaccion": "transferencia",
+                "Monto": monto,
+            }
+            restrans = self.insert_transaction(transaction)
+            if restrans:
+                return True
+            else:
+                raise Exception
+        except Exception as e:
+            self.connection.rollback()
+            print(e)
+            return False
+
+    def insert_transaction(self, transaction):
+
+        # trunk-ignore(bandit/B608)
+        query = f"""INSERT INTO Transacciones (ID_Cuenta_origen, ID_Cuenta_destino, TipoTransaccion, Monto, FechaHoraTransaccion)
+                    VALUES ({transaction["ID_Cuenta_origen"]}, {transaction["ID_Cuenta_destino"]}, '{transaction["TipoTransaccion"]}', {transaction["Monto"]}, NOW());
+                """
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
             return True
         except Exception as e:
             self.connection.rollback()
             print(e)
             return False
+
+    def list_transactions_user(self, user_id):
+        # trunk-ignore(bandit/B608)
+        query = f""" SELECT * FROM Transacciones
+                    WHERE ID_Cuenta_origen IN (SELECT ID_Cuenta FROM Cuentas WHERE ID_Usuario = {user_id})
+                    OR ID_Cuenta_destino IN (SELECT ID_Cuenta FROM Cuentas WHERE ID_Usuario = {user_id})
+                    """
+        return self.execute(query)

@@ -43,3 +43,7 @@ class SessionHandler:
 
     def get_all_sessions(self):
         return self.client.get_user_sessions(self.session[0][0])
+
+    def update(self):
+        self.client.close()
+        self.client.connect()

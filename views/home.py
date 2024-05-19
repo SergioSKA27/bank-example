@@ -62,7 +62,7 @@ def home():
                 retiros(st.session_state.session.client)
 
         if st.button("Actualizar Informacion", use_container_width=True):
-            st.rerun()
+            st.session_state.session.update()
 
     with c2:
         if len(accounts) < 1:

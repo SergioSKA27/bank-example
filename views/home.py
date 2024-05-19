@@ -61,6 +61,9 @@ def home():
             if ret:
                 retiros(st.session_state.session.client)
 
+        if st.button("Actualizar Informacion", use_container_width=True):
+            st.rerun()
+
     with c2:
         if len(accounts) < 1:
             st.warning("No tienes cuentas registradas")

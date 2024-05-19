@@ -1,3 +1,4 @@
+import time
 import streamlit as st
 from components import MySQLClient
 
@@ -16,11 +17,12 @@ def transfer_maker(client: MySQLClient):
     
     amount = st.number_input("Monto a transferir", min_value=1.0, step=1.0)
     
-    res = st.button("Transferir", use_container_width=True)
+    res = st.button("Transferir", use_container_width=True, key="transfer")
     if res:
         res = client.make_transfer(selected_account, selected_destiny, amount)
         if res:
             st.success("Transferencia realizada exitosamente")
+            time.sleep(2)
             st.rerun()
         else:
             st.error("Fallo al realizar transferencia, tus fondos no fueron afectados")

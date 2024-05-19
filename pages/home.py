@@ -1,4 +1,6 @@
 import streamlit as st
+
+from elements import navbar
 from views.home import home
 
 st.markdown(
@@ -25,8 +27,9 @@ st.markdown(
 )
 
 
-
 if __name__ == "__main__":
     if "session" not in st.session_state or not st.session_state.session.is_active():
         st.switch_page("pages/login.py")
+
+    navbar(st.session_state.session)
     home()

@@ -18,9 +18,10 @@ def create_account(client: MySQLClient):
             "TipoCuenta": acc_type,
             "SaldoActual": 0,
         }
-        client.insert_account(acont)
-        st.success("Cuenta creada exitosamente")
-        time.sleep(3)
-        st.rerun()
-    else:
-        st.error("Error al crear cuenta")
+        res = client.insert_account(acont)
+        if not res:
+            st.error("Error al crear cuenta")
+        else:
+            st.success("Cuenta creada exitosamente")
+            time.sleep(3)
+            st.rerun()

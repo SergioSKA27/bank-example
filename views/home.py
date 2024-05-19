@@ -4,6 +4,7 @@ import streamlit as st
 from views.accont_creator import create_account
 from views.deposit_maker import deposit_maker
 
+from .retiros import retiros
 from .transfer_maker import transfer_maker
 
 
@@ -55,6 +56,10 @@ def home():
             transf = st.button("Transferir", use_container_width=True)
             if transf:
                 transfer_maker(st.session_state.session.client)
+
+            ret = st.button("Retirar", use_container_width=True)
+            if ret:
+                retiros(st.session_state.session.client)
 
     with c2:
         if len(accounts) < 1:

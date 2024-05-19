@@ -161,6 +161,37 @@ END IF;
             print(e)
             return False
 
+    def make_withdrawal(self, cuenta, monto):
+        # trunk-ignore(bandit/B608)
+        query = f"SELECT * FROM Cuentas WHERE ID_Cuenta = {cuenta}"
+
+        saldo = self.execute(query)[0][3]
+
+        if saldo < monto:
+            return False
+        else:
+            nsaldo = float(saldo) - monto
+            # trunk-ignore(bandit/B608)
+            update = f"UPDATE Cuentas SET SaldoActual = {nsaldo} WHERE ID_Cuenta = {cuenta}"
+            try:
+                self.cursor.execute(update)
+                self.connection.commit()
+                transaction = {
+                    "ID_Cuenta_origen": cuenta,
+                    "ID_Cuenta_destino": cuenta,
+                    "TipoTransaccion": "retiro",
+                    "Monto": monto,
+                }
+                restrans = self.insert_transaction(transaction)
+                if restrans:
+                    return True
+                else:
+                    raise Exception
+            except Exception as e:
+                self.connection.rollback()
+                print(e)
+                return False
+
     def make_transfer(self, origen, destino, monto):
         # trunk-ignore(bandit/B608)
         query = f"SELECT * FROM Cuentas WHERE ID_Cuenta = {origen}"

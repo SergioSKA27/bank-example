@@ -37,7 +37,7 @@ def navbar(session: SessionHandler):
                 st.page_link("pages/home.py", icon="🏠", label="Inicio")
 
             with cols[4]:
-                st.page_link("pages/register.py", icon="📈", label="Historial")
+                st.page_link("pages/history.py", icon="📈", label="Historial")
 
             with cols[5]:
                 st.page_link("pages/register.py", label="Ver Perfil", icon="👤")

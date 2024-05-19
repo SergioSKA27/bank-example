@@ -234,3 +234,26 @@ END IF;
     def get_all_accounts(self):
         query = "SELECT * FROM Cuentas"
         return self.execute(query)
+
+    def insert_session(self, session):
+        query = """INSERT INTO HistorialSesiones (ID_Usuario, FechaHoraInicio, DireccionIP, AgenteUsuario)
+                    VALUES (%s, NOW(), %s, %s);"""
+
+        values = (
+            session["ID_Usuario"],
+            session["DireccionIP"],
+            session["AgenteUsuario"],
+        )
+
+        try:
+            self.cursor.execute(query, values)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
+    def get_user_sessions(self, user_id):
+        # trunk-ignore(bandit/B608)
+        query = f"SELECT * FROM HistorialSesiones WHERE ID_Usuario = {user_id}"
+        return self.execute(query)

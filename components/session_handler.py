@@ -9,7 +9,15 @@ class SessionHandler:
 
     def start_session(self, email: str):
         self.session = self.client.get_user(email)
+        self.register_session(email)
         self.active = True
+
+    def register_session(self, email: str):
+        user = self.client.get_user(email)[0][0]
+        ip = "127.0.0.1"
+        agent = "Mozilla/5.0"
+        s = {"ID_Usuario": user, "DireccionIP": ip, "AgenteUsuario": agent}
+        self.client.insert_session(s)
 
     def get_session_owner(self):
         return self.session[0][1]
@@ -32,3 +40,6 @@ class SessionHandler:
     def close(self):
         self.active = False
         self.session = None
+
+    def get_all_sessions(self):
+        return self.client.get_user_sessions(self.session[0][0])

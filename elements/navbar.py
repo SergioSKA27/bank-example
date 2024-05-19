@@ -43,7 +43,9 @@ def navbar(session: SessionHandler):
                 st.page_link("pages/register.py", label="Ver Perfil", icon="👤")
 
             with cols[-1]:
-                st.button("Salir🚪", use_container_width=True, type="primary")
+                if st.button("Salir🚪", use_container_width=True, type="primary"):
+                    session.close()
+                    st.switch_page("pages/login.py")
         else:
             with cols[-3]:
                 st.page_link("app.py", icon="🏠", label="Inicio")

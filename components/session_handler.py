@@ -28,3 +28,7 @@ class SessionHandler:
 
     def get_all_accounts(self):
         return self.client.get_all_accounts()
+
+    def close(self):
+        self.active = False
+        self.session = None

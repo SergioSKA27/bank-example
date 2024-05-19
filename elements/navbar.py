@@ -30,7 +30,7 @@ def navbar(session: SessionHandler):
             
         if session.is_active():            
             with cols[2]:
-                    st.page_link("pages/register.py",icon="🏠",label="Inicio")
+                    st.page_link("pages/home.py",icon="🏠",label="Inicio")
             with cols[3]:
                 st.page_link("pages/register.py",icon="💸",label="Transferir")
             

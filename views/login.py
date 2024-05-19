@@ -14,7 +14,7 @@ def login(client: MySQLClient):
     else:
         # Si la sesion ya esta activa, redirigir a la pagina principal
         if st.session_state.session.is_active():
-            st.switch_page('app.py')
+            st.switch_page('pages/home.py')
 
     with st.container(border=True):
         st.title('Login')
@@ -27,7 +27,7 @@ def login(client: MySQLClient):
                 st.toast('Sesion iniciada correctamente', icon=':material/sentiment_satisfied:')
                 st.session_state.session.start_session(email)
                 time.sleep(1)
-                st.switch_page('app.py')
+                st.switch_page('pages/home.py')
 
             else:
                 st.error('Fallo al iniciar Sesion',icon=":material/sentiment-dissatisfied:")

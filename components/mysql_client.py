@@ -131,35 +131,22 @@ END IF;
             print(e)
             return False
 
-    def make_deposit(self, transaction):
+    def make_depositer(self, cuenta, monto):
         # trunk-ignore(bandit/B608)
-        query = f"""
-        START TRANSACTION;
+        query = f"SELECT * FROM Cuentas WHERE ID_Cuenta = {cuenta}"
 
-        -- Verificar que la cuenta existe
-        SELECT SaldoActual INTO @Saldo FROM Cuentas WHERE ID_Cuenta = {transaction["ID_Cuenta"]};
+        saldo = self.execute(query)[0][3]
 
-        IF @Saldo IS NOT NULL THEN
-            -- Actualizar el saldo de la cuenta
-            UPDATE Cuentas
-            SET SaldoActual = SaldoActual + {transaction["Monto"]}
-            WHERE ID_Cuenta = {transaction["ID_Cuenta"]};
+        nsaldo = float(saldo) + monto
 
-            -- Registrar la transacción
-            INSERT INTO Transacciones (ID_Cuenta_origen, ID_Cuenta_destino, TipoTransaccion, Monto, FechaHoraTransaccion)
-            VALUES ({transaction["ID_Cuenta"]}, {transaction["ID_Cuenta"]}, 'transferencia',{transaction["Monto"]}, NOW());
-
-            COMMIT;
-        ELSE
-            -- Si la cuenta no existe, deshacer la transacción
-            ROLLBACK;
-        END IF;
-        """
+        # trunk-ignore(bandit/B608)
+        update = f"UPDATE Cuentas SET SaldoActual = {nsaldo} WHERE ID_Cuenta = {cuenta}"
 
         try:
-            self.cursor.execute(query)
+            self.cursor.execute(update)
             self.connection.commit()
             return True
         except Exception as e:
+            self.connection.rollback()
             print(e)
             return False

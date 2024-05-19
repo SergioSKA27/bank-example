@@ -68,4 +68,6 @@ def home():
 
 
 if __name__ == "__main__":
+    if "session" not in st.session_state or not st.session_state.session.is_active():
+        st.switch_page("pages/login.py")
     home()

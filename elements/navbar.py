@@ -33,10 +33,8 @@ def navbar(session: SessionHandler):
             st.markdown("<p class='logo-nav'>UniBank</p>", unsafe_allow_html=True)
 
         if session.is_active():
-            with cols[2]:
-                st.page_link("pages/home.py", icon="🏠", label="Inicio")
             with cols[3]:
-                st.page_link("pages/register.py", icon="💸", label="Transferir")
+                st.page_link("pages/home.py", icon="🏠", label="Inicio")
 
             with cols[4]:
                 st.page_link("pages/register.py", icon="📈", label="Historial")

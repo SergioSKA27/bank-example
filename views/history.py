@@ -20,6 +20,8 @@ def transaction_card(transactions):
     fig = px.line(df, x="Fecha de Transaccion", y="Monto", title="Transacciones")
     st.plotly_chart(fig)
     
+    circlechart = px.pie(df, names="Tipo de Transaccion", title="Transacciones")
+    st.plotly_chart(circlechart, use_container_width=True)
     
     
     

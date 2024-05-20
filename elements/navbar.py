@@ -40,7 +40,7 @@ def navbar(session: SessionHandler):
                 st.page_link("pages/history.py", icon="📈", label="Historial")
 
             with cols[5]:
-                st.page_link("pages/register.py", label="Ver Perfil", icon="👤")
+                st.page_link("pages/profile.py", label="Ver Perfil", icon="👤")
 
             with cols[-1]:
                 if st.button("Salir🚪", use_container_width=True, type="primary"):

@@ -1,3 +1,4 @@
+plotly
 mysql-connector-python
 bcrypt
 streamlit

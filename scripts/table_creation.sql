@@ -5,7 +5,8 @@ CREATE TABLE Usuarios (
     Apellido VARCHAR(50),
     CorreoElectronico VARCHAR(100),
     Contraseña VARCHAR(100),
-    FechaRegistro DATE
+    FechaRegistro DATE,
+    Pais VARCHAR(50)
 );
 CREATE TABLE Cuentas (
     ID_Cuenta INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,4 +42,3 @@ CREATE TABLE HistorialSesiones (
     AgenteUsuario VARCHAR(255),
     FOREIGN KEY (ID_Usuario) REFERENCES Usuarios(ID_Usuario)
 );
-

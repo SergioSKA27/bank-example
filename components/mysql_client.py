@@ -1,4 +1,5 @@
 import mysql.connector
+import datetime
 
 
 class MySQLClient:
@@ -25,14 +26,16 @@ class MySQLClient:
         self.connection.close()
 
     def insert_user(self, user):
-        query = """INSERT INTO Usuarios (Nombre, Apellido, CorreoElectronico, Contraseña, FechaRegistro)
-                    VALUES (%s, %s, %s, %s, NOW());
+        query = """INSERT INTO Usuarios (Nombre, Apellido, CorreoElectronico, Contraseña, FechaRegistro,Pais)
+                    VALUES (%s, %s, %s, %s, %s,%s);
                 """
         values = (
             user["Nombre"],
             user["Apellido"],
             user["CorreoElectronico"],
             user["Contraseña"],
+            datetime.datetime.now(),
+            user["Pais"],
         )
 
         try:

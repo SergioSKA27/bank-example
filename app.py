@@ -8,7 +8,7 @@ st.set_page_config(page_title="UniBank", page_icon=":bank:", layout="wide")
 client = MySQLClient(host="localhost",
                     user="root",
                     password=st.secrets["PASS"],
-                    database="unibank")
+                    database="upbank")
 
 client.connect()
 

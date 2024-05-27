@@ -5,7 +5,7 @@ from components import MySQLClient, SessionHandler
 from elements import navbar
 
 client = MySQLClient(
-    host="localhost", user="root", password=secrets["PASS"], database="unibank"
+    host="localhost", user="root", password=secrets["PASS"], database="upbank"
 )
 
 client.connect()
